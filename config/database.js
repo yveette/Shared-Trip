@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 require('../models/User');
+require('../models/Trip');
 
 const dbName = 'sharedTrips';
 const connnectionString = `mongodb://localhost:27017/${dbName}`;
