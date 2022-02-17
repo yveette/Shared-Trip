@@ -10,7 +10,7 @@ router.get('/register', isGuest(), (req, res) => {
 
 router.post('/register', isGuest(), async (req, res) => {
     try {
-        if (req.body.password.trim() != '') {
+        if (req.body.password.trim() == '') {
             throw new Error('Passwords is required!');
         }
         if (req.body.password != req.body.repass) {
@@ -21,9 +21,9 @@ router.post('/register', isGuest(), async (req, res) => {
         res.redirect('/');
     } catch (err) {
         console.error(err);
-        // TODO chech gender errors
         const errors = mapErrors(err);
-        res.render('register', { data: { email: req.body.email, gender: req.body.gender }, errors });
+        const isMale = req.body.gender == 'male';
+        res.render('register', { data: { email: req.body.email, isMale }, errors });
     }
 });
 

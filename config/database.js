@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 require('../models/User');
 
-// TODO change database name
 const dbName = 'sharedTrips';
 const connnectionString = `mongodb://localhost:27017/${dbName}`;
 
@@ -22,5 +21,4 @@ module.exports = async (app) => {
         console.error('Error connecting to database');
         process.exit(1);
     }
-
-}
+};
