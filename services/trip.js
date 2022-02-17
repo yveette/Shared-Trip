@@ -5,7 +5,7 @@ async function getAllTrips() {
 }
 
 async function getTripById(id) {
-    return Trip.findById({});
+    return Trip.findById(id).populate('owner', '_id email gender').populate('buddies', '_id email');
 }
 
 async function createTrip(trip) {

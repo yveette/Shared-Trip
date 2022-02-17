@@ -22,7 +22,31 @@ function ownerViewModel(user) {
     };
 }
 
+function tripDetailsViewModel(trip) {
+    return {
+        _id: trip._id,
+        start: trip.start,
+        end: trip.end,
+        date: trip.date,
+        time: trip.time,
+        carImg: trip.carImg,
+        carBrand: trip.carBrand,
+        seats: trip.seats,
+        price: trip.price,
+        description: trip.description,
+        owner: ownerViewModel(trip.owner),
+        buddies: ownerBuddiesViewModel(trip.buddies)
+    };
+}
+
+function ownerBuddiesViewModel(users) {
+    let result = [];
+    users.map(u => result.push(u.email));
+    return result.join(', ');
+}
+
 module.exports = {
     tripViewModel,
-    ownerViewModel
+    ownerViewModel,
+    tripDetailsViewModel
 };
