@@ -1,21 +1,16 @@
-const { getTripById } = require('../services/trip');
-const { tripDetailsViewModel } = require('../util/viewModels');
+const { getTripById, getTripAndUsers } = require('../services/trip');
+const { tripDetailsViewModel, tripViewModel } = require('../util/viewModels');
 
-function preload() {
+function preload(populate) {
     return async function (req, res, next) {
         const id = req.params.id;
-        const trip = await getTripById(id);
-        res.locals.trip = tripDetailsViewModel(trip);
-
-        if (req.session.user) {
-            res.locals.trip.hasUser = true;
+        
+        if (populate) {
+            const trip = await getTripAndUsers(id);
+            res.locals.trip = tripDetailsViewModel(trip);
         } else {
-            res.locals.trip.hasUser = false;
-        }
-
-        const userId = req.session.user?._id;
-        if (res.locals.trip.owner._id.toString() == userId) {
-            res.locals.trip.isOwner = true;
+            const trip = await getTripById(id);
+            res.locals.trip = tripViewModel(trip); 
         }
 
         next();

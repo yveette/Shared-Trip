@@ -12,7 +12,20 @@ router.get('/trips', async (req, res) => {
     res.render('catalog', { title: 'Catalog Page', trips });
 });
 
-router.get('/trips/:id', preload(), (req, res) => {
+router.get('/trips/:id', preload(true), (req, res) => {
+
+    if (req.session.user) {
+        res.locals.trip.hasUser = true;
+        res.locals.trip.isOwner = req.session.user?._id == res.locals.trip.owner._id;
+    }
+
+    // TEST
+    if (res.locals.trip.seats > 0) {
+        res.locals.trip.available = true;
+    } else {
+        res.locals.trip.available = false;
+    }
+
     res.render('details', { title: 'Details Trip' });
 });
 
