@@ -1,4 +1,5 @@
 const Trip = require('../models/Trip');
+const User = require('../models/User');
 
 async function getAllTrips() {
     return Trip.find({}).populate('owner');
@@ -20,6 +21,11 @@ async function getTripAndUsers(id) {
 async function createTrip(trip) {
     const result = new Trip(trip);
     await result.save();
+
+    //add trips id to user trips array
+    const user = await User.findById(result.owner);
+    user.trips.push(result._id);
+    await user.save();
 }
 
 async function updateTrip(id, trip) {
