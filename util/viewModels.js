@@ -35,11 +35,13 @@ function tripDetailsViewModel(trip) {
         price: trip.price,
         description: trip.description,
         owner: ownerViewModel(trip.owner),
-        buddies: ownerBuddiesViewModel(trip.buddies)
+        // buddies: ownerBuddiesViewModel(trip.buddies)
+        buddies: trip.buddies,
+        people: BuddiesViewModel(trip.buddies)
     };
 }
 
-function ownerBuddiesViewModel(users) {
+function BuddiesViewModel(users) {
     let result = [];
     users.map(u => result.push(u.email));
     return result.join(', ');
