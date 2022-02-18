@@ -4,6 +4,10 @@ async function getAllTrips() {
     return Trip.find({}).populate('owner');
 }
 
+async function getTripsByUser(userId) {
+    return Trip.find({ owner: userId }).lean();
+}
+
 async function getTripById(id) {
     //.lean()
     return Trip.findById(id);
@@ -41,7 +45,7 @@ async function deleteById(id) {
 
 async function joinTrip(tripId, userId) {
     const trip = await Trip.findById(tripId);
-    
+
     if (trip.buddies.includes(userId)) {
         throw new Error('User is already part of the trip!');
     }
@@ -57,5 +61,6 @@ module.exports = {
     getTripAndUsers,
     updateTrip,
     deleteById,
-    joinTrip
+    joinTrip,
+    getTripsByUser
 };
